@@ -1,0 +1,52 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Image Processing App</h1>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <label for="brightness_threshold">Brightness Threshold:</label>
+        <input type="number" name="brightness_threshold" value="140" min="0" max="255" required>
+        <label for="color_palette_size">Color Palette Size:</label>
+        <input type="number" name="color_palette_size" value="256" min="2" max="256" required>
+        <label for="saturation_factor">Saturation Factor:</label>
+        <input type="number" name="saturation_factor" value="3.0" step="0.1" min="0.1" required>
+        <label for="grid_size">Grid Size (width,height):</label>
+        <input type="text" name="grid_size" value="10,10" pattern="\d+,\d+" required>
+        <button type="submit">Process Image</button>
+    </form>
+</body>
+</html>
+
+<!-- templates/result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Image Processing Result</h1>
+    <div class="result-container">
+        <div>
+            <h2>Processed Image</h2>
+            <img src="data:image/png;base64,{{ img_data }}" alt="Processed Image">
+            <a href="data:image/png;base64,{{ img_data }}" download="processed_image.png" class="download-btn">Download Processed Image</a>
+        </div>
+        <div>
+            <h2>Mask</h2>
+            <img src="data:image/png;base64,{{ mask_data }}" alt="Mask">
+            <a href="data:image/png;base64,{{ mask_data }}" download="mask.png" class="download-btn">Download Mask</a>
+        </div>
+    </div>
+    <a href="/" class="back-btn">Process Another Image</a>
+</body>
+</html>
